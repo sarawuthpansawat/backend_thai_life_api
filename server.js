@@ -62,9 +62,15 @@ app.get('/api/policies', async (req, res) => {
     }
   
     try {
-      // Find policies based on query
-      const policies = await Policy.find(query);
-      res.json(policies);
+      if(query){
+         // Find policies based on query
+        const policies = await Policy.find(query);
+        res.json(policies);
+      }else{
+        const policies = await Policy.find();
+        res.json(policies);
+      }
+     
     } catch (error) {
       console.error('Error fetching policies:', error);
       res.status(500).send('Error fetching policies');
