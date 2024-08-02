@@ -4,13 +4,19 @@ const cors = require('cors');
 const multer = require('multer');
 const xlsx = require('xlsx');
 const path = require('path');
-
-const { parse } = require('date-fns');
+require('dotenv').config();
+// const { parse } = require('date-fns');
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect('mongodb://localhost:27017/insurance', { useNewUrlParser: true, useUnifiedTopology: true });
+//mongoose.connect('mongodb://localhost:27017/insurance', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  ssl: true,
+  tlsAllowInvalidCertificates: true
+});
 
 const policySchema = new mongoose.Schema({
   partner_code: Number,
